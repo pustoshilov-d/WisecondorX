@@ -154,6 +154,23 @@ def tool_newref_post(args, cpus):
 
 
 '''
+Tries to remove text file, when it is busy, until becomes successful.
+This function, prevents OSError: [Errno 26] Text file busy...
+'''
+
+
+def force_remove(file_id):
+    removed = False
+    while not removed:
+        try:
+            os.remove(file_id)
+            removed = True
+        except:
+            removed = False
+            print('Cannot remove {}, because it is busy, trying again...'.format(file_id))
+
+
+'''
 Merges separate subfiles (A, F, M) to one final
 reference file.
 '''
@@ -173,7 +190,7 @@ def tool_newref_merge(args, outfiles, trained_cutoff):
                 final_ref['{}.M'.format(str(component))] = npz_file[component]
             else:
                 final_ref[str(component)] = npz_file[component]
-        os.remove(file_id)
+        force_remove(file_id)
     final_ref['is_nipt'] = args.nipt
     final_ref['trained_cutoff'] = trained_cutoff
     np.savez_compressed(args.outfile, **final_ref)
