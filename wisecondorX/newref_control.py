@@ -4,6 +4,7 @@ import copy
 import logging
 import os
 import sys
+import time
 
 import numpy as np
 from concurrent import futures
@@ -160,14 +161,15 @@ This function, prevents OSError: [Errno 26] Text file busy...
 
 
 def force_remove(file_id):
-    removed = False
-    while not removed:
+    attemp = 1
+    while True:
         try:
             os.remove(file_id)
-            removed = True
+            break
         except:
-            removed = False
-            print('Cannot remove {}, because it is busy, trying again...'.format(file_id))
+            print('Attemp #{}: Cannot remove {}, because it is busy, trying again...'.format(attemp, file_id))
+            attemp = attemp + 1
+            time.sleep(5)
 
 
 '''
