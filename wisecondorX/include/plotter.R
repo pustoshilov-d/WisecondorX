@@ -30,7 +30,7 @@ gender = input$ref_gender
 beta = as.numeric(input$beta)
 zcutoff = as.numeric(input$zscore)
 ylim = input$ylim
-plot.title = ifelse(!is.null(input$plot_title), input$plot_title, "")
+plot.title = input$plot_title
 
 if (input$cairo) options(bitmaptype='cairo')
 
@@ -125,7 +125,7 @@ layout(l.matrix)
 
 par(mar=c(2.5,4,1,0), mgp=c(2.4,0.5,0), oma=c(0,0,3,0))
 
-plot(1, main=plot.title, axes=F, # plots nothing -- enables segments function
+plot(1, main="", axes=F, # plots nothing -- enables segments function
      xlab="", ylab="", xlim=c(chr.ends[1], chr.ends[length(chr.ends)]),
      cex=0, ylim=c(chr.wide.lower.limit,chr.wide.upper.limit))
 
@@ -210,6 +210,12 @@ legend(x=0,
        legend=c("Gain", "Loss", paste0("Number of reads: ", n.reads)), text.col=c(color.C, color.B, black),
        cex=1.3, bty="n", pch=c(16,16), col=c(color.C, color.B, "white"))
 par(xpd=F)
+
+if (!is.null(plot.title)) {
+    par(xpd=NA)
+    title(plot.title, line=1.3, adj=0.8, col.main=color.A)
+    par(xpd=F)
+}
 
 # plot segmentation
 
