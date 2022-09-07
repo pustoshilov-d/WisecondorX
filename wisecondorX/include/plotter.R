@@ -7,6 +7,7 @@ options(warn=-1)
 args <- commandArgs(T)
 in.file <- paste0(args[which(args == "--infile")+1])
 
+
 # -----
 # lib
 # -----
@@ -29,6 +30,7 @@ gender = input$ref_gender
 beta = as.numeric(input$beta)
 zcutoff = as.numeric(input$zscore)
 ylim = input$ylim
+plot.title = ifelse(!is.null(input$plot_title), input$plot_title, "")
 
 if (input$cairo) options(bitmaptype='cairo')
 
@@ -123,7 +125,7 @@ layout(l.matrix)
 
 par(mar=c(2.5,4,1,0), mgp=c(2.4,0.5,0), oma=c(0,0,3,0))
 
-plot(1, main="", axes=F, # plots nothing -- enables segments function
+plot(1, main=plot.title, axes=F, # plots nothing -- enables segments function
      xlab="", ylab="", xlim=c(chr.ends[1], chr.ends[length(chr.ends)]),
      cex=0, ylim=c(chr.wide.lower.limit,chr.wide.upper.limit))
 
@@ -278,7 +280,7 @@ for (c in chrs){
   if (any(is.na(whis))){
     next
   }
-  
+
   png(paste0(out.dir, "/", labels[c],".png"), width=14,height=10,units="in",res=256,pointsize=18)
 
   upper.limit <- 0.6 + whis[2]
@@ -289,7 +291,7 @@ for (c in chrs){
     lower.limit = ylim[1] ; upper.limit = ylim[2]
   }
   par(mar=c(2.5,4,1,0), mgp=c(2.4,0.5,0))
-  
+
   plot(1, main="", axes=F, # plots nothing -- enables segments function
        xlab="", ylab="", cex=0, ylim=c(lower.limit,upper.limit), xlim=margins)
 

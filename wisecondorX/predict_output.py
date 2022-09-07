@@ -28,6 +28,12 @@ def exec_write_plots(rem_input, results):
         'infile': str('{}.json'.format(json_plot_dir)),
         'out_dir': str('{}.plots'.format(rem_input['args'].outid)),
     }
+
+    if rem_input["args"].plot_title:
+        # Strip away paths from the outid if need be
+        json_dict["plot_title"] = str(
+            os.path.basename(rem_input["args"].outid))
+
     exec_R(json_dict)
 
 

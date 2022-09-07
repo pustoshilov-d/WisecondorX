@@ -396,6 +396,9 @@ def main():
     parser_test.add_argument('--cairo',
                              action='store_true',
                              help='Uses cairo bitmap type for plotting. Might be necessary for certain setups.')
+    parser_test.add_argument("--plot-title",
+                             action="store_true",
+                             help="Add the output name as plot title")
     parser_test.set_defaults(func=tool_test)
 
     args = parser.parse_args(sys.argv[1:])
