@@ -32,7 +32,7 @@ zcutoff = as.numeric(input$zscore)
 ylim = input$ylim
 plot.title = input$plot_title
 
-if (input$cairo) options(bitmaptype='cairo')
+if (input$cairo) options(bitmapType='cairo')
 
 # aberration_cutoff
 
